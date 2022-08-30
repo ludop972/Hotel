@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AccountController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-5">Mon compte</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <small><a href="/admin"> Vous êtes un Administrateur, accéder au backoffice ?</a></small><br>
+    {% endif %}
+    <p class="text-center mt-2">Bienvenue dans votre compte <strong>{{ app.user.name }}</strong>.<br>
+        C'est dans cet espace que vous allez pouvoir gérer toutes vos informations personnels.</p>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="account-item text-center">
+                <img src="{{ asset('assets/img/password.png') }}" alt="Modifier mon mot de passe" class=""><br>
+                <a href="{{ path('app_account_password') }}"> Modifier mon mot de passe</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="account-item text-center">
+                <img src="{{ asset('assets/img/verifier.png') }}" alt="Mes réservations" class=""><br>
+                <a href="#"> Mes réservations</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+{% endblock %}

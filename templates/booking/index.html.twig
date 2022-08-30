@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes réservations{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Mes réservations</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Chambre</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.beginAt ? booking.beginAt|date('d-m-Y') : ' ' }}</td>
+                    <td>{{ booking.endAt ? booking.endAt|date('d-m-Y') : ' ' }}</td>
+                    <td>{{ booking.room }} {{ booking.room.price }}</td>
+                    <td>
+                        <a href="{{ path('app_booking_show', {'id': booking.id}) }}" class="btn btn-success btn-sm">Voir</a>
+                        <a href="{{ path('app_booking_edit', {'id': booking.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune réservation n'à été faite</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_booking_new') }}">Ajouter une réservation</a>
+    </div>
+
+{% endblock %}

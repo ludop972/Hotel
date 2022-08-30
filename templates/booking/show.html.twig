@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Booking{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mt-5">Votre réservation</h1>
+
+        <table class="table mt-5">
+            <tbody>
+            <tr>
+                <th>Début :</th>
+                <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin :</th>
+                <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Titre :</th>
+                <td>{{ booking.title }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_booking_index') }}" class="btn btn-danger btn-sm">Retour</a>
+
+        <a href="{{ path('app_booking_edit', {'id': booking.id}) }}" class="btn btn-warning btn-sm float-end">Modifier</a>
+
+        {{ include('booking/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

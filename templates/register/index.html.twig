@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center mt-5">Inscription</h1>
+        {% if notification_success %}
+            <div class="alert alert-info">{{ notification_success }}</div>
+            <hr>
+        {% endif %}
+        {% if notification_error %}
+            <div class="alert alert-danger">{{ notification_error }}</div>
+            <hr>
+        {% endif %}
+        {{ form(form) }}
+    </div>
+{% endblock %}

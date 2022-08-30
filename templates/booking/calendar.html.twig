@@ -1,0 +1,71 @@
+{# templates/booking/calendar.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <a href="{{ path('app_booking_new') }}">Réserver</a>
+
+        <div id="calendar-holder" class="mt-5"></div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            var calendarEl = document.getElementById('calendar-holder');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                defaultView: 'dayGridMonth',
+                locale: 'fr',
+                editable: true,
+                //aspectRatio: 2.5,
+                contentHeight: 450,
+                eventSources: [
+                    {
+                        url: "{{ path('fc_load_events') }}",
+                        method: "POST",
+                        extraParams: {
+                            filters: JSON.stringify({})
+                        },
+                        failure: () => {
+                             alert("There was an error while fetching FullCalendar!");
+                        },
+                    },
+                ], initialDate: '2022-06-01',
+                initialView: 'timeGridWeek',
+                events: [
+                    {
+                        start: '2022-06-27',
+                        end: '2022-06-29',
+                        display: 'background',
+                        title: 'Période de disponibilité de la Suite Royal',
+                        backgroundColor: 'green',
+                    }
+                ],
+                header: {
+                    left: 'prev,next , today',
+                    center: 'title',
+                    right: '',
+                },
+                plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'bootstrap5Plugin' ], // https://fullcalendar.io/docs/plugin-index
+                timeZone: 'UTC',
+                themeSystem: 'bootstrap5'
+            });
+            calendar.render();
+            calendar.updateSize();
+            console.log(calendar.getOption('aspectRatio'));
+            console.log(calendar.getOption('contentHeight'));
+        });
+
+    </script>
+{% endblock %}
